@@ -4,16 +4,24 @@ from app.routes import economics , currencys, fundamentals, news, users
 import psycopg2
 from  psycopg2.extras  import RealDictCursor
 from app import env
+from time import sleep
 
 
 #seeting db connections
 while True:
     try:
-        conn = psycopg2.connect( host= env.DATABASE_HOST, user= env.DATABASE_USER , database= env.DATABASE_NAME , password= env.DATABASE_PASSWORD , cursor_factory= RealDictCursor)
+        #postgress db
+        conn = psycopg2.connect( host= env.POSTGRES_DATABASE_HOST,port=env.POSTGRES_DATABASE_PORT, user= env.POSTGRES_DATABASE_USER , database= env.POSTGRES_DATABASE_NAME , password= env.POSTGRES_DATABASE_PASSWORD , cursor_factory= RealDictCursor)
         cursor = conn.cursor()
-        print(" db connection ok")
+        print(" db connection ok") #TODO: replace (ln15) with logging
+        
+        #mongodb database
+
+
         break
     except Exception as error:
+        print(error )
+        print("db connection failed retrying")
         sleep(1)
 
 app = FastAPI()

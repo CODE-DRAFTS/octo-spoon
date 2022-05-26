@@ -21,7 +21,8 @@ async def get_interest_rates():                                      -- returns 
 async def get_unemployment_rate():                                   -- returns historical unemployment rate
 '''
 
-
+from typing import Optional
+from app import main
 
 async def get_users():
     return
@@ -65,8 +66,21 @@ async def get_earnings_calendar( company_symbol: str):
 async def get_ipo_calendar():
     return
 
-async def get_inflation_rates():
-    return
+async def get_inflation_rates(from_year: Optional[str]=None , to_year: Optional[str]= None):
+    if from_year != None and to_year != None:
+        main.cursor.execute(""" SELECT year, rate FROM inflation_rates WHERE year>=%s AND year<=%s""", (from_year, to_year, ))
+        return main.cursor.fetchall()
+    if from_year != None and to_year == None:
+        main.cursor.execute(""" SELECT year, rate FROM inflation_rates WHERE year>=%s """, (from_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year != None:
+        main.cursor.execute(""" SELECT year, rate FROM inflation_rates WHERE year<=%s """, (to_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year == None:
+        main.cursor.execute(""" SELECT year, rate FROM inflation_rates """)
+        return main.cursor.fetchall()
+
+
 
 async def get_real_gdp():
     return
