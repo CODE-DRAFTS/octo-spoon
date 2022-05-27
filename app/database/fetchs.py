@@ -82,8 +82,19 @@ async def get_inflation_rates(from_year: Optional[str]=None , to_year: Optional[
 
 
 
-async def get_real_gdp():
-    return
+async def get_real_gdp(from_year: Optional[str]=None , to_year: Optional[str]= None):
+    if from_year != None and to_year != None:
+        main.cursor.execute(""" SELECT year, value FROM gross_domestic_product WHERE year>=%s AND year<=%s""", (from_year, to_year, ))
+        return main.cursor.fetchall()
+    if from_year != None and to_year == None:
+        main.cursor.execute(""" SELECT year, value FROM gross_domestic_product WHERE year>=%s """, (from_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year != None:
+        main.cursor.execute(""" SELECT year, value FROM gross_domestic_product WHERE year<=%s """, (to_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year == None:
+        main.cursor.execute(""" SELECT year, value FROM gross_domestic_product """)
+        return main.cursor.fetchall()
 
 async def get_interest_rates():
     return

@@ -37,7 +37,19 @@ async def get_inflationrates(from_year: Optional[str]= None, to_year:Optional[st
 
 @router.get('/function=REAL_GDP')
 async def get_gdp(from_year: Optional[str]= None, to_year:Optional[str] = None):
-    return("real gdp")
+    if from_year!= None or to_year!= None:
+        if from_year != None:
+            if utils.to_int(from_year) == None:
+                print(utils.to_int(from_year))
+                print("a")
+                raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, detail=f"from_year={from_year} is not a valid year")
+        if to_year != None:
+            if  utils.to_int(to_year) == None:
+                print(utils.to_int(to_year))
+                raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, detail=f"to_year={to_year} is not a valid year")
+    #TODO: validate year inputs
+
+    return await fetchs.get_real_gdp(from_year, to_year)
 
 
 @router.get('/function=INTEREST_RATE')
