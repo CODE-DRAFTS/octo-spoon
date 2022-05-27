@@ -31,7 +31,7 @@ async def get_inflationrates(from_year: Optional[str]= None, to_year:Optional[st
             if  utils.to_int(to_year) == None:
                 print(utils.to_int(to_year))
                 raise HTTPException(status_code= status.HTTP_404_NOT_FOUND, detail=f"to_year={to_year} is not a valid year")
-
+    #TODO: validate year inputs
     return await fetchs.get_inflation_rates(from_year, to_year)
 
 

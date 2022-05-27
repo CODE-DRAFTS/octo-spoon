@@ -9,11 +9,7 @@ def to_int( number: str):
 
 
 def check_year(year: str):
-    try:
-        date = datetime( year, "1", "1")
-        print(date)
-        return date
-    except:
-        return "null"
+    #TODO: validate year 
+    return
 
 
