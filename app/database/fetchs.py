@@ -96,8 +96,32 @@ async def get_real_gdp(from_year: Optional[str]=None , to_year: Optional[str]= N
         main.cursor.execute(""" SELECT year, value FROM gross_domestic_product """)
         return main.cursor.fetchall()
 
-async def get_interest_rates():
-    return
 
-async def get_unemployment_rate():
-    return
+async def get_interest_rates(from_year: Optional[str]=None , to_year: Optional[str]= None):
+    if from_year != None and to_year != None:
+        main.cursor.execute(""" SELECT year, value FROM interest_rates WHERE year>=%s AND year<=%s""", (from_year, to_year, ))
+        return main.cursor.fetchall()
+    if from_year != None and to_year == None:
+        main.cursor.execute(""" SELECT year, value FROM interest_rates WHERE year>=%s """, (from_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year != None:
+        main.cursor.execute(""" SELECT year, value FROM interest_rates WHERE year<=%s """, (to_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year == None:
+        main.cursor.execute(""" SELECT year, value FROM interest_rates """)
+        return main.cursor.fetchall()
+
+
+async def get_unemployment_rate(from_year: Optional[str]=None , to_year: Optional[str]= None):
+    if from_year != None and to_year != None:
+        main.cursor.execute(""" SELECT year, value FROM unemployment_rates WHERE year>=%s AND year<=%s""", (from_year, to_year, ))
+        return main.cursor.fetchall()
+    if from_year != None and to_year == None:
+        main.cursor.execute(""" SELECT year, value FROM unemployment_rates WHERE year>=%s """, (from_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year != None:
+        main.cursor.execute(""" SELECT year, value FROM unemployment_rates WHERE year<=%s """, (to_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year == None:
+        main.cursor.execute(""" SELECT year, value FROM unemployment_rates """)
+        return main.cursor.fetchall()

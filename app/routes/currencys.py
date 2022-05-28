@@ -15,6 +15,6 @@ router = APIRouter(
 
 
 @router.get('/function=CURRENCY_EXCHANGE_RATE')
-async def get_exchange_rate(from_currency: str,  to_currency: str):
+async def get_exchange_rate(to_currency: str):
     return {"exchange rates endpoint"}
 
