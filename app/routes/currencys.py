@@ -11,6 +11,7 @@ from fastapi import APIRouter
 
 router = APIRouter(
     prefix="/api/v1/currencies",
+    tags=["CURRENCIES"]
 )
 
 

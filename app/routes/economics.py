@@ -11,11 +11,12 @@ this file will have routes for getting economic indicators data
 from fastapi import APIRouter, HTTPException, status
 from typing import Optional
 from app import utils
-from app.database import fetchs, deletes, inserts
+from app.database import fetchs
 
 
 router = APIRouter(
-    prefix="/api/v1/economics"
+    prefix="/api/v1/economics",
+    tags=["ECONOMIC INDICATORS"]
 )
 
 

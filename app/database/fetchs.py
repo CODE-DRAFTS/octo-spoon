@@ -1,10 +1,7 @@
 '''
 //functions
 
-get_users()                                                          --returns all users
-get_a_user()                                                         -- returns a single user details
-get_news()                                                           -- returns all news articles
-get_news_item(news_id: int)                                          --returns a single news article
+
 async def get_rates( from_currency:str, to_currency:str):            -- retruns exchange rate of a currency pair
 async def get_income_statement(company_symbol: str):                 -- returns income statement of a company    
 async def get_balance_sheet(company_symbol: str):                    -- returns company balance sheet
@@ -24,17 +21,6 @@ async def get_unemployment_rate():                                   -- returns 
 from typing import Optional
 from app import main
 
-async def get_users():
-    return
-
-async def get_a_user( user_id: int):
-    return
-
-async def get_news():
-    return
-
-async def get_news_item(news_id: int):
-    return
 
 async def get_rates( from_currency:str, to_currency:str):
     return
@@ -48,7 +34,19 @@ async def get_balance_sheet(company_symbol: str):
 async def get_cash_flow(company_symbol: str):
     return
 
-async def get_earnings(company_symbol: str):
+async def get_earnings(company_symbol: str, from_year: Optional[str]=None , to_year: Optional[str]= None):
+    if from_year != None and to_year != None:
+        main.cursor.execute(""" SELECT date, value FROM earnings WHERE symbol=%s AND year>=%s AND year<=%s""", ( company_symbol, from_year, to_year, ))
+        return main.cursor.fetchall()
+    if from_year != None and to_year == None:
+        main.cursor.execute(""" SELECT date, value FROM earnings WHERE symbol=%s AND year>=%s """, ( company_symbol, from_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year != None:
+        main.cursor.execute(""" SELECT date, value FROM earnings WHERE symbol=%s AND year<=%s """, ( company_symbol, to_year,))
+        return main.cursor.fetchall()
+    if from_year == None and to_year == None:
+        main.cursor.execute(""" SELECT date, value FROM earnings WHERE symbol=%s """, ( company_symbol,))
+        return main.cursor.fetchall()
     return
 
 async def get_company_details( company_symbol: str):

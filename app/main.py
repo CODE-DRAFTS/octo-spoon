@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import economics , currencys, fundamentals, news, users
+from app.routes import economics , currencys, fundamentals
 import psycopg2
 from  psycopg2.extras  import RealDictCursor
 from app import env
@@ -16,8 +16,6 @@ while True:
         print(" db connection ok") #TODO: replace (ln15) with logging
         
         #mongodb database
-
-
         break
     except Exception as error:
         print(error )
@@ -37,8 +35,6 @@ app.add_middleware( CORSMiddleware,
 app.include_router( economics.router)
 app.include_router( currencys.router)
 app.include_router( fundamentals.router)
-app.include_router( news.router)
-app.include_router( users.router)
 
 @app.get("/")
 async def root():
